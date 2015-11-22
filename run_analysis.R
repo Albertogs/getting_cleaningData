@@ -77,7 +77,7 @@ for(i in suje){
       k <- k+1
   }
 }
-write.table(cleandata2,"data_means.txt")
+write.table(cleandata2,"data_means.txt", row.names = FALSE)
 
 
 
