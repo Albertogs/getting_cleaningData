@@ -51,7 +51,7 @@ j <- j+1
 }
 names(v_activity) <- "Activity"
 names(s_total)    <- "Subject"
-cleandata <- cbind(s_total,v_activity,table1) ## 10299 68
+cleandata <- cbind(v_activity,s_total,table1) ## 10299 68
 write.table(cleandata,"merged_data.txt")
 ##--------------------------------------------------------------------
 ## From cleandata is is computed the average of each variable for each activity and subject
@@ -64,20 +64,35 @@ m2 <- matrix(0, ncol=dim(cleandata)[2], nrow=length(suje)*length(actv))
 cleandata2 <- data.frame(m2)
 colnames(cleandata2) <- colnames(cleandata)
 
-k <- 1
-for(i in suje){
-  for(j in actv){
-      
-      cleandata2[k, 1] <- i
-      cleandata2[k, 2] <- activity[j, 2]
-      bool1 <- cleandata$Subject  == i
-      bool2 <- cleandata$Activity == activity[j, 2]
-      
+k<- 1
+for(i in actv){
+    for(j in suje){
+      cleandata2[k, 1] <- activity[i, 2]
+      cleandata2[k, 2] <- j
+      bool1 <- cleandata$Activity == activity[i, 2]
+      bool2 <- cleandata$Subject  == j
       cleandata2[k, 3:dim(cleandata)[2]] <- colMeans(cleandata[bool1&bool2, 3:dim(cleandata)[2]])
       k <- k+1
-  }
+    }
 }
+
 write.table(cleandata2,"data_means.txt", row.names = FALSE)
+
+
+#k <- 1
+#for(i in suje){
+#  for(j in actv){
+      
+#      cleandata2[k, 1] <- i
+#      cleandata2[k, 2] <- activity[j, 2]
+#      bool1 <- cleandata$Subject  == i
+#      bool2 <- cleandata$Activity == activity[j, 2]
+      
+#      cleandata2[k, 3:dim(cleandata)[2]] <- colMeans(cleandata[bool1&bool2, 3:dim(cleandata)[2]])
+#      k <- k+1
+#  }
+#}
+
 
 
 
